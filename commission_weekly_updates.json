@@ -1,0 +1,83 @@
+{
+  "name": "commission weekly updates",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                5
+              ],
+              "triggerAtHour": 16
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b2794629-ff2f-471d-a5a2-f6152e57f031",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "=",
+        "options": {},
+        "embeds": {
+          "values": [
+            {
+              "description": "=Hello, You need to send updates on the commission!\n\ncurrent date of updates for commissioner xxx:\n {{ $json['Readable date'] }}",
+              "color": "#FFBAC7",
+              "title": "Commission update reminder"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "9bfe409f-8388-4cc8-b1dd-1e15258b96d1",
+      "name": "Discord",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "Dw1iJk3oE3cI320L",
+          "name": "Discord Webhook account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "06db395e-a66e-4f0b-8655-1faacaf3c2f9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9fd2ed4c8189f959c8798cbb7ffd694c440b60ebef016725126b1ca703b00cc0"
+  },
+  "id": "ZPjR8yyFMTta46BQ",
+  "tags": []
+}

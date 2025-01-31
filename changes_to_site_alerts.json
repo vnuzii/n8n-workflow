@@ -1,0 +1,305 @@
+{
+  "name": "changes to site alerts",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -80,
+        620
+      ],
+      "id": "2c075909-05f9-462f-86c9-448c83591791",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "url": "https://vnuzii.carrd.co/#commissions",
+        "options": {}
+      },
+      "id": "b2ae5efa-64af-4ae1-b9ad-f8ebdae61fff",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d838d7e3-b732-41f4-801b-cffdd74af556",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "=<div class=\"table-inner\"><table><thead><tr><th>type</th><th>price</th></tr></thead><tbody><tr><td>sketch</td><td>$12</td></tr><tr><td>coloured</td><td>$34</td></tr></tbody></table></div></div><div id=\"table01\" class=\"style1 table-wrapper\"><div class=\"table-inner\"><table><thead><tr><th>addons</th><th>price</th></tr></thead><tbody><tr><td>items</td><td>$5 ea</td></tr><tr><td>background</td><td>varies, $6+</td></tr></tbody></table></div>",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a37b489b-e3c7-4fcc-b4c5-6c3148a03504",
+      "name": "If2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "options": {},
+        "embeds": {
+          "values": [
+            {
+              "description": "Hello! user @vnuzii has changed their prices!\n\nGo check it out!",
+              "author": "Status update",
+              "color": "#D47070"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        720,
+        380
+      ],
+      "id": "6f5392e1-ad20-40a3-a764-e044bc6ad9d5",
+      "name": "Discord1",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "0aStpdaHdSnm2c51",
+          "name": "Discord Webhook account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d838d7e3-b732-41f4-801b-cffdd74af556",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "=<span class=\"p\"><strong>COMMISSIONS ARE</strong><br /> ♡<u>CLOSED</u>♡</span></h3><p ",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "id": "486295d7-ae65-43b2-ab5a-386fd232878c",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "options": {},
+        "embeds": {
+          "values": [
+            {
+              "description": "Hello! user @vnuzii has changed their status\n\nGo check it out!",
+              "author": "Status update",
+              "color": "#D47070"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        720,
+        620
+      ],
+      "id": "401b973e-3a4b-4384-8af1-42cb7b54d1ca",
+      "name": "Discord2",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "0aStpdaHdSnm2c51",
+          "name": "Discord Webhook account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d838d7e3-b732-41f4-801b-cffdd74af556",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "=<div class=\"inner\"><h3 id=\"text21\" class=\"style2\">♡ <u><strong>terms of service</strong></u> ♡</h3><h3 id=\"text08\" class=\"style5\">last updated: 12/34/56</h3><div id=\"list02\" class=\"list\"><ul><li><p>all payments in this $ via that</p></li><li><p>more comm rules</p></li></ul></div></div></div></div><div id=\"container05\" class=\"container columns\"><div class=\"wrapper\"><div class=\"inner\"><div><div id=\"table07\" class=\"style2 table-wrapper\"><div class=\"table-inner\"><table><thead><tr><th>♡ I will draw</th></tr></thead><tbody><tr><td>this</td></tr><tr><td>that</td></tr><tr><td>also this</td></tr></tbody></table></div></div></div><div><div id=\"table04\" class=\"style2 table-wrapper\"><div class=\"table-inner\"><table><thead><tr><th>x I won&#39;t draw</th></tr></thead><tbody><tr><td>not this</td></tr><tr><td>no</td></tr><tr><td>no no no pls no</td></tr></tbody></table></div>",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f081190b-3a40-4d4b-ba82-d29ef250eae7",
+      "name": "If3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "options": {},
+        "embeds": {
+          "values": [
+            {
+              "description": "Hello! user @vnuzii has changed their Terms of Service!\n\nGo check it out!",
+              "author": "Status update",
+              "color": "#D47070"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        720,
+        860
+      ],
+      "id": "ac8df66a-542b-45f3-b138-198121d7844d",
+      "name": "Discord3",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "0aStpdaHdSnm2c51",
+          "name": "Discord Webhook account 7"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Discord1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Discord2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Discord3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a46a412e-2ee2-4efe-9afe-1294f3982ec9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9fd2ed4c8189f959c8798cbb7ffd694c440b60ebef016725126b1ca703b00cc0"
+  },
+  "id": "GDJk6Cmw47567HhR",
+  "tags": []
+}
